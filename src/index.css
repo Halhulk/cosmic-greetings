@@ -1,0 +1,16 @@
+/* index.css */
+/* Global styles can be added here */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
