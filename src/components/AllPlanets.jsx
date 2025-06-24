@@ -188,7 +188,7 @@ export default function AllPlanets({ birth }) {
                 {planets.map((planet) => (
                   <td key={planet.id} style={{ textAlign: 'center', padding: '8px' }}>
                     {results[planet.id]
-                    ? dayjs(results[planet.id].nextBirthdayEarth).format('LL')
+                    ? dayjs(results[planet.id].nextBirthdayEarth).locale(i18n.language).format('LL')
                    : '-'}
                   </td>
                 ))}
