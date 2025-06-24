@@ -19,11 +19,11 @@ export default function GreetingCard() {
   const [previewMode, setPreviewMode] = useState(false);
   
   const backgroundOptions = {
-    default: '/images/stardust-bg.jpg',
-    nebula: '/images/nebula-bg.jpg',
-    galaxy: '/images/galaxy-bg.jpg',
-    planet: `/images/${planetId}-bg.jpg`,
-    sun: '/images/sun-bg.jpg'
+default: `${import.meta.env.BASE_URL}images/stardust-bg.jpg`,
+nebula: `${import.meta.env.BASE_URL}images/nebula-bg.jpg`,
+galaxy: `${import.meta.env.BASE_URL}images/galaxy-bg.jpg`,
+planet: `${import.meta.env.BASE_URL}images/${planetId}-bg.jpg`,
+sun: `${import.meta.env.BASE_URL}images/sun-bg.jpg`
   };
   
   const remainingDays = window.history.state?.usr?.remainingDays;

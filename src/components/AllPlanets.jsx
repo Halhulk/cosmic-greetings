@@ -9,7 +9,7 @@ const planets = [
   {
     id: 'earth',
     nameKey: 'PlanetNames.Earth',
-    image: '/images/earth.png',
+    image: `${import.meta.env.BASE_URL}images/earth.png`,
     diameter: '12,742 km',
     gravity: '9.81 m/s²',
     orbitalPeriod: '365.25 days',
@@ -19,7 +19,7 @@ const planets = [
   {
     id: 'mars',
     nameKey: 'PlanetNames.Mars',
-    image: '/images/mars.png',
+    image: `${import.meta.env.BASE_URL}images/mars.png`,
     diameter: '6,779 km',
     gravity: '3.71 m/s²',
     orbitalPeriod: '687 days',
@@ -29,7 +29,7 @@ const planets = [
   {
     id: 'jupiter',
     nameKey: 'PlanetNames.Jupiter',
-    image: '/images/jupiter.png',
+    image: `${import.meta.env.BASE_URL}images/jupiter.png`,
     diameter: '139,820 km',
     gravity: '24.79 m/s²',
     orbitalPeriod: '4,333 days',
@@ -39,7 +39,7 @@ const planets = [
   {
     id: 'ceres',
     nameKey: 'PlanetNames.Ceres',
-    image: '/images/ceres.png',
+    image: `${import.meta.env.BASE_URL}images/ceres.png`,
     diameter: '945 km',
     gravity: '0.27 m/s²',
     orbitalPeriod: '1680 days',
@@ -49,7 +49,7 @@ const planets = [
   {
     id: 'moon',
     nameKey: 'PlanetNames.Moon',
-    image: '/images/moon.png',
+    image: `${import.meta.env.BASE_URL}images/moon.png`,
     diameter: '3,474 km',
     gravity: '1.62 m/s²',
     orbitalPeriod: '27.3 days', // or use synodic period ~29.5 days if preferred
