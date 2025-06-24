@@ -12,7 +12,11 @@ i18n
   .use(initReactI18next)
   .init({
       fallbackLng: 'en',
-  supportedLngs: ['en'],
+    supportedLngs: [
+    'en', 'tr', 'fr', 'de', 'es', 'it', 'ja', 'ar', 'zh', 'ko', 'he', 'hi',
+    'th', 'fa', 'az', 'kk', 'tk', 'bs', 'bg', 'hr', 'sr', 'hu', 'fi', 'mk', 'pl'
+     ],
+
   load: 'languageOnly', // ← bu satır önemli!
 
 
