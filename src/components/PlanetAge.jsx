@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 import { fetchPlanetAge } from '../api'
 
-// Day.js yerel dil destekleri:
+// Day.js locale importları:
 import 'dayjs/locale/tr'
 import 'dayjs/locale/fr'
 import 'dayjs/locale/de'
@@ -34,7 +34,6 @@ export default function PlanetAge({ planet, birthday, setBirthday }) {
   const [error, setError]     = useState('')
   const [loading, setLoading] = useState(false)
 
-  // Dil değişiminde dayjs locale ayarla
   useEffect(() => {
     const supportedLocales = [
       'en', 'tr', 'fr', 'de', 'es', 'it', 'ja', 'ar', 'zh', 'ko', 'he',
@@ -44,7 +43,6 @@ export default function PlanetAge({ planet, birthday, setBirthday }) {
     dayjs.locale(locale)
   }, [i18n.language])
 
-  // Doğum tarihi veya gezegen değiştiğinde otomatik hesapla
   useEffect(() => {
     const calculate = async () => {
       if (!birthday || !planet) return
@@ -69,7 +67,6 @@ export default function PlanetAge({ planet, birthday, setBirthday }) {
     <div className="card">
       <h3>{t('yourPlanetBirthday')}</h3>
 
-      {/* 🌠 Emoji + Tarih Seçici */}
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
         <span
           title="Enter your birth date"
@@ -99,7 +96,7 @@ export default function PlanetAge({ planet, birthday, setBirthday }) {
         <ul className="result">
           <li>
             {t('nextDate')}:&nbsp;
-            {dayjs(data.nextBirthdayDate).format('LL')}
+            {dayjs(data.nextBirthdayDate).locale(i18n.language).format('LL')}
           </li>
           <li>
             {t('daysToNext')}:&nbsp;
