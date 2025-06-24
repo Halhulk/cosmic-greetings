@@ -24,7 +24,6 @@ i18n
     },
     backend: {
       loadPath: `${import.meta.env.BASE_URL}locales/{{lng}}.json`
-
     },
     interpolation: {
       escapeValue: false
