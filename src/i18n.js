@@ -11,7 +11,11 @@ i18n
   // Passes the i18n instance to react-i18next.
   .use(initReactI18next)
   .init({
-    fallbackLng: 'en',
+      fallbackLng: 'en',
+  supportedLngs: ['en'],
+  load: 'languageOnly', // ← bu satır önemli!
+
+
     debug: false,
     detection: {
       // The detection order: Use the browser language, then the HTML tag, etc.
