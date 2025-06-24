@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LanguageSelector from '../components/LanguageSelector'
+import html2canvas from 'html2canvas'
 
 export default function GreetingCard() {
   const { planetId } = useParams()
@@ -15,6 +16,8 @@ export default function GreetingCard() {
   const [greetingMessage, setGreetingMessage] = useState('')
   const [bgImage, setBgImage] = useState('default')
   const [previewMode, setPreviewMode] = useState(false)
+
+  const cardRef = useRef(null)
 
   const backgroundOptions = {
     default: `${import.meta.env.BASE_URL}images/stardust-bg.jpg`,
@@ -41,14 +44,39 @@ export default function GreetingCard() {
     setPreviewMode(true)
   }
 
-  const handleCopy = () => {
-    const cardText = `${headerText}\n\n👤 ${toName}\n\n💬 ${greetingMessage}\n\n📨 https://halhulk.github.io/cosmic-greetings/`
-    navigator.clipboard.writeText(cardText)
-    alert(t('CopiedToClipboard') || 'Mesaj panoya kopyalandı!')
-  }
-
   const handleReturnHome = () => navigate('/')
   const handleUpdate = () => setPreviewMode(false)
+    const handleCopyImage = async () => {
+    if (!navigator.clipboard || !window.ClipboardItem) {
+      alert(t('ClipboardImageNotSupported') || 'Görsel kopyalama tarayıcınızda desteklenmiyor.')
+      return
+    }
+
+    try {
+      const canvas = await html2canvas(cardRef.current)
+      canvas.toBlob((blob) => {
+        const item = new ClipboardItem({ 'image/png': blob })
+        navigator.clipboard.write([item])
+        alert(t('ImageCopiedToClipboard') || 'Kart görsel olarak panoya kopyalandı!')
+      })
+    } catch (err) {
+      console.error(err)
+      alert(t('ClipboardError') || 'Kopyalama sırasında hata oluştu.')
+    }
+  }
+
+  const handleDownloadImage = async () => {
+    try {
+      const canvas = await html2canvas(cardRef.current)
+      const link = document.createElement('a')
+      link.download = `birthday-card-${planetId}.png`
+      link.href = canvas.toDataURL('image/png')
+      link.click()
+    } catch (err) {
+      console.error(err)
+      alert(t('DownloadError') || 'İndirme başarısız oldu.')
+    }
+  }
 
   const sharedInputStyle = {
     backgroundColor: '#111',
@@ -69,8 +97,7 @@ export default function GreetingCard() {
     cursor: "pointer",
     marginBottom: "8px"
   }
-
-  if (!previewMode) {
+    if (!previewMode) {
     return (
       <div style={{
         background: 'linear-gradient(to right, #000428, #004e92)',
@@ -130,28 +157,31 @@ export default function GreetingCard() {
         <LanguageSelector />
       </header>
 
-      <div style={{
-        backgroundImage: `url(${backgroundOptions[bgImage]})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        padding: "20px",
-        borderRadius: "8px",
-        maxWidth: "500px",
-        margin: "0 auto",
-        color: "yellow"
-      }}>
+      <div
+        ref={cardRef}
+        style={{
+          backgroundImage: `url(${backgroundOptions[bgImage]})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          padding: "20px",
+          borderRadius: "8px",
+          maxWidth: "500px",
+          margin: "0 auto",
+          color: "yellow"
+        }}
+      >
         <h2>{headerText}</h2>
         <div style={{ marginTop: '20px' }}>
           <h3>{toName}</h3>
           <p>{greetingMessage}</p>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '20px' }}>
-          <button onClick={handleUpdate} style={buttonStyle}>{t('Update') || 'Güncelle'}</button>
-          <button onClick={handleCopy} style={{ ...buttonStyle, backgroundColor: "#007bff" }}>
-            {t('CopyToClipboard') || 'Panoya Kopyala'}
-          </button>
-          <button onClick={handleReturnHome} style={buttonStyle}>{t('ReturnHome') || 'Ana Sayfa'}</button>
-        </div>
+      </div>
+
+      <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+        <button onClick={handleUpdate} style={buttonStyle}>{t('Update') || 'Güncelle'}</button>
+        <button onClick={handleCopyImage} style={buttonStyle}>{t('CopyToClipboardImage') || 'Görseli Panoya Kopyala'}</button>
+        <button onClick={handleDownloadImage} style={buttonStyle}>{t('DownloadCard') || 'Kartı İndir'}</button>
+        <button onClick={handleReturnHome} style={buttonStyle}>{t('ReturnHome') || 'Ana Sayfa'}</button>
       </div>
 
       <footer style={{ marginTop: '20px', textAlign: 'center', color: '#ccc' }}>
