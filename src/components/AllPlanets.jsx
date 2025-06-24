@@ -5,6 +5,32 @@ import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
 
+// Day.js dil destekleri:
+import 'dayjs/locale/tr';
+import 'dayjs/locale/fr';
+import 'dayjs/locale/de';
+import 'dayjs/locale/es';
+import 'dayjs/locale/it';
+import 'dayjs/locale/ja';
+import 'dayjs/locale/ar';
+import 'dayjs/locale/zh';
+import 'dayjs/locale/ko';
+import 'dayjs/locale/he';
+import 'dayjs/locale/hi';
+import 'dayjs/locale/th';
+import 'dayjs/locale/fa';
+import 'dayjs/locale/az';
+import 'dayjs/locale/kk';
+import 'dayjs/locale/bs';
+import 'dayjs/locale/bg';
+import 'dayjs/locale/hr';
+import 'dayjs/locale/sr';
+import 'dayjs/locale/hu';
+import 'dayjs/locale/fi';
+import 'dayjs/locale/mk';
+import 'dayjs/locale/pl';
+// Türkçe, Fransızca, Arapça vs. tüm desteklenen diller burada
+
 const planets = [
   {
     id: 'earth',
@@ -68,9 +94,17 @@ export default function AllPlanets({ birth }) {
   const [error, setError] = useState('');
 
   // Update dayjs locale when language changes.
+
   useEffect(() => {
-    dayjs.locale(i18n.language);
-  }, [i18n.language]);
+  const supportedLocales = [
+    'en', 'tr', 'fr', 'de', 'es', 'it', 'ja', 'ar', 'zh', 'ko', 'he',
+    'hi', 'th', 'fa', 'az', 'kk', 'bs', 'bg', 'hr', 'sr', 'hu', 'fi', 'mk', 'pl'
+  ];
+  const locale = supportedLocales.includes(i18n.language) ? i18n.language : 'en';
+  dayjs.locale(locale);
+}, [i18n.language]);
+
+
 
   // Validate birthday.
   if (!birth || !dayjs(birth, 'YYYY-MM-DD', true).isValid() || dayjs(birth).isAfter(dayjs())) {
@@ -154,8 +188,8 @@ export default function AllPlanets({ birth }) {
                 {planets.map((planet) => (
                   <td key={planet.id} style={{ textAlign: 'center', padding: '8px' }}>
                     {results[planet.id]
-                      ? dayjs(results[planet.id].nextBirthdayEarth).format('LL')
-                      : '-'}
+                    ? dayjs(results[planet.id].nextBirthdayEarth).format('LL')
+                   : '-'}
                   </td>
                 ))}
               </tr>
