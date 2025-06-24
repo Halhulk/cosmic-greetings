@@ -177,12 +177,43 @@ export default function GreetingCard() {
         </div>
       </div>
 
-      <div style={{ marginTop: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
-        <button onClick={handleUpdate} style={buttonStyle}>{t('Update') || 'Güncelle'}</button>
-        <button onClick={handleCopyImage} style={buttonStyle}>{t('CopyToClipboardImage') || 'Görseli Panoya Kopyala'}</button>
-        <button onClick={handleDownloadImage} style={buttonStyle}>{t('DownloadCard') || 'Kartı İndir'}</button>
-        <button onClick={handleReturnHome} style={buttonStyle}>{t('ReturnHome') || 'Ana Sayfa'}</button>
-      </div>
+<div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '14px' }}>
+  <button
+    onClick={handleUpdate}
+    style={buttonStyle}
+    title="Güncelle"
+    aria-label="Update"
+  >
+    <i className="fas fa-sync-alt" aria-hidden="true"></i>
+  </button>
+
+  <button
+    onClick={handleCopyImage}
+    style={buttonStyle}
+    title="Görseli panoya kopyala"
+    aria-label="Copy image to clipboard"
+  >
+    <i className="fas fa-copy" aria-hidden="true"></i>
+  </button>
+
+  <button
+    onClick={handleDownloadImage}
+    style={buttonStyle}
+    title="Kartı indir"
+    aria-label="Download card"
+  >
+    <i className="fas fa-download" aria-hidden="true"></i>
+  </button>
+
+  <button
+    onClick={handleReturnHome}
+    style={buttonStyle}
+    title="Ana sayfaya dön"
+    aria-label="Return home"
+  >
+    <i className="fas fa-arrow-left" aria-hidden="true"></i>
+  </button>
+</div>
 
       <footer style={{ marginTop: '20px', textAlign: 'center', color: '#ccc' }}>
         <small>{t('Footnote') || 'Gönderildi: cosmic-greetings'}</small>
