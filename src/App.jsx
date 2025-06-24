@@ -5,58 +5,45 @@ import AllPlanets from './components/AllPlanets';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 dayjs.extend(localizedFormat);
-import 'dayjs/locale/tr'; // Other locales will update dynamically based on language.
 import './App.css';
 
 export default function App() {
   const { t, i18n } = useTranslation();
+  const [birth, setBirth] = useState('');
 
-  // Update dayjs locale when the language changes.
+  // Locale değişince dayjs'e bildir
   useEffect(() => {
     dayjs.locale(i18n.language);
   }, [i18n.language]);
 
-  // Birth input state (initially empty) and submittedBirth to trigger calculations.
-  const [birth, setBirth] = useState("");
-  const [submittedBirth, setSubmittedBirth] = useState("");
-
-  const handleCalculate = () => {
-    if (!birth || !dayjs(birth, 'YYYY-MM-DD', true).isValid() || dayjs(birth).isAfter(dayjs())) {
-      alert(t('enterValidBirthday'));
-      return;
-    }
-    setSubmittedBirth(birth);
-  };
-
   return (
     <div className="container">
-      {/* Only the controls (date input and calculate button) are rendered globally */}
-      <section className="controls">
-        <label>
-          {t('birthdate')}
-          <input
-            type="date"
-            value={birth}
-            onChange={(e) => setBirth(e.target.value)}
-            max={dayjs().format('YYYY-MM-DD')}
-          />
-        </label>
-        <button
-          onClick={handleCalculate}
-          style={{
-            backgroundColor: "#007bff",
-            color: "white",
-            padding: "8px 16px",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            marginLeft: "10px"
-          }}
+      {/* 🌠 Emoji + Doğum tarihi girişi */}
+      <section className="controls" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '20px' }}>
+        <span
+          title="Enter your birth date"
+          style={{ fontSize: '1.5rem', cursor: 'default' }}
+          role="img"
+          aria-label="cosmic hint"
         >
-          {t('calculate')}
-        </button>
+          🌠
+        </span>
+        <input
+          type="date"
+          value={birth}
+          onChange={(e) => setBirth(e.target.value)}
+          max={dayjs().format('YYYY-MM-DD')}
+          style={{
+            padding: '8px',
+            borderRadius: '4px',
+            border: '1px solid #ccc',
+            fontSize: '1rem'
+          }}
+        />
       </section>
-      {submittedBirth && <AllPlanets birth={submittedBirth} />}
+
+      {/* Doğum tarihi varsa tüm gezegenleri göster */}
+      {birth && <AllPlanets birth={birth} setBirthday={setBirth} />}
     </div>
   );
 }
