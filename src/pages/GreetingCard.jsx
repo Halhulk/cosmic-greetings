@@ -16,7 +16,6 @@ export default function GreetingCard() {
   const [greetingMessage, setGreetingMessage] = useState('')
   const [bgImage, setBgImage] = useState('default')
   const [previewMode, setPreviewMode] = useState(false)
-
   const cardRef = useRef(null)
 
   const backgroundOptions = {
@@ -43,10 +42,10 @@ export default function GreetingCard() {
     }
     setPreviewMode(true)
   }
-
+    const handleUpdate = () => setPreviewMode(false)
   const handleReturnHome = () => navigate('/')
-  const handleUpdate = () => setPreviewMode(false)
-    const handleCopyImage = async () => {
+
+  const handleCopyImage = async () => {
     if (!navigator.clipboard || !window.ClipboardItem) {
       alert(t('ClipboardImageNotSupported') || 'Görsel kopyalama tarayıcınızda desteklenmiyor.')
       return
@@ -61,7 +60,7 @@ export default function GreetingCard() {
       })
     } catch (err) {
       console.error(err)
-      alert(t('ClipboardError') || 'Kopyalama sırasında hata oluştu.')
+      alert(t('ClipboardError') || 'Panoya kopyalama sırasında hata oluştu.')
     }
   }
 
@@ -74,7 +73,7 @@ export default function GreetingCard() {
       link.click()
     } catch (err) {
       console.error(err)
-      alert(t('DownloadError') || 'İndirme başarısız oldu.')
+      alert(t('DownloadError') || 'Kart indirilemedi.')
     }
   }
 
@@ -91,11 +90,11 @@ export default function GreetingCard() {
   const buttonStyle = {
     backgroundColor: "#001f3f",
     color: "white",
-    padding: "8px 16px",
+    padding: "10px 14px",
     border: "none",
-    borderRadius: "4px",
+    borderRadius: "6px",
     cursor: "pointer",
-    marginBottom: "8px"
+    fontSize: "16px"
   }
     if (!previewMode) {
     return (
@@ -135,8 +134,9 @@ export default function GreetingCard() {
                 <option value="sun">{t('SunBackground') || 'Güneş'}</option>
               </select>
             </label>
-            <button type="submit" style={buttonStyle}>{t('Preview') || 'Önizleme'}</button>
-            <button type="button" onClick={handleReturnHome} style={buttonStyle}>{t('ReturnHome') || 'Ana Sayfa'}</button>
+            <button type="submit" style={buttonStyle} title="Önizleme" aria-label="Preview">
+              <i className="fas fa-eye"></i>
+            </button>
           </form>
         </div>
 
@@ -177,43 +177,20 @@ export default function GreetingCard() {
         </div>
       </div>
 
-<div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '14px' }}>
-  <button
-    onClick={handleUpdate}
-    style={buttonStyle}
-    title="Güncelle"
-    aria-label="Update"
-  >
-    <i className="fas fa-sync-alt" aria-hidden="true"></i>
-  </button>
-
-  <button
-    onClick={handleCopyImage}
-    style={buttonStyle}
-    title="Görseli panoya kopyala"
-    aria-label="Copy image to clipboard"
-  >
-    <i className="fas fa-copy" aria-hidden="true"></i>
-  </button>
-
-  <button
-    onClick={handleDownloadImage}
-    style={buttonStyle}
-    title="Kartı indir"
-    aria-label="Download card"
-  >
-    <i className="fas fa-download" aria-hidden="true"></i>
-  </button>
-
-  <button
-    onClick={handleReturnHome}
-    style={buttonStyle}
-    title="Ana sayfaya dön"
-    aria-label="Return home"
-  >
-    <i className="fas fa-arrow-left" aria-hidden="true"></i>
-  </button>
-</div>
+      <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '14px' }}>
+        <button onClick={handleUpdate} style={buttonStyle} title="Güncelle" aria-label="Update">
+          <i className="fas fa-sync-alt"></i>
+        </button>
+        <button onClick={handleCopyImage} style={buttonStyle} title="Görseli panoya kopyala" aria-label="Copy image">
+          <i className="fas fa-copy"></i>
+        </button>
+        <button onClick={handleDownloadImage} style={buttonStyle} title="Kartı indir" aria-label="Download card">
+          <i className="fas fa-download"></i>
+        </button>
+        <button onClick={handleReturnHome} style={buttonStyle} title="Ana sayfaya dön" aria-label="Return home">
+          <i className="fas fa-arrow-left"></i>
+        </button>
+      </div>
 
       <footer style={{ marginTop: '20px', textAlign: 'center', color: '#ccc' }}>
         <small>{t('Footnote') || 'Gönderildi: cosmic-greetings'}</small>
